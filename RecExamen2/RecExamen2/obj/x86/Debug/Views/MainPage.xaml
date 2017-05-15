@@ -1,0 +1,112 @@
+﻿<Page
+    x:Class="RecExamen2.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RecExamen2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:vm="using:RecExamen2.ViewModels">
+
+    <Page.DataContext>
+        <vm:clsMainPageVM></vm:clsMainPageVM>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Barra superior-->
+        <RelativePanel Background="LightCoral">
+            <TextBlock Text="LEAGUE OF LEGENDS" FontSize="30" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+        </RelativePanel>
+
+        <!--Grid contenedor-->
+        <Grid Grid.Row="1" Background="LightBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--Personajes-->
+            <ScrollViewer Background="LightGreen">
+                <ListView x:ConnectionId='8' Name="lsvCampeones" ItemsSource="{Binding ListaCampeones, UpdateSourceTrigger=PropertyChanged}" IsItemClickEnabled="True"                                    SelectedItem="{Binding Path=CampeonSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                
+                                <Image Source="{Binding foto}" MaxHeight="50"></Image>
+                                <TextBlock Text="{Binding nombre}" TextAlignment="Center"></TextBlock>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+
+            <!--Detalles-->
+            <Grid Grid.Column="1" Grid.Row="1" DataContext="{Binding CampeonSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="8*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Vida-->
+                <TextBlock Text="Vida:" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='1' x:Name="pgVida" Grid.Column="1" Margin="12,8" Value="{Binding vida}"  HorizontalAlignment="Left" Width="250" MinHeight="20" Maximum="1000" Minimum="0"/>
+                
+                <!--Regeneracion-->
+                <TextBlock Text="Regeneracion: " Grid.Row="1" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='2' x:Name="pgRege" Grid.Column="1" Grid.Row="1" Margin="12,8" Value="{Binding regeneracion}" HorizontalAlignment="Left" MinHeight="20" Width="250" Maximum="15" Minimum="0"/>
+
+                <!--Daño-->
+                <TextBlock Text="Daño: " Grid.Row="2" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='3' x:Name="pgDanno" Grid.Column="1" Grid.Row="2" Margin="12,8" Value="{Binding danno}" HorizontalAlignment="Left" Width="250" MinHeight="20" Maximum="100" Minimum="0"/>
+
+                <!--Armadura-->
+                <TextBlock Text="Armadura: " Grid.Row="3" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='4' x:Name="pgArmor" Grid.Column="1" Grid.Row="3" Margin="12,8" Value="{Binding armadura}" HorizontalAlignment="Left" MinHeight="20" Width="250" Maximum="50" Minimum="0"/>
+
+                <!--Velocidad de ataque-->
+                <TextBlock Text="Velocidad ataque: " Grid.Row="4" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='5' x:Name="pgVelAta" Grid.Column="1" Grid.Row="4" Margin="12,8" Value="{Binding velAtaque}" HorizontalAlignment="Left" MinHeight="20" Width="250" Maximum="1.5" Minimum="0"/>
+
+                <!--Resistencia-->
+                <TextBlock Text="Resistencia: " Grid.Row="5" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='6' x:Name="pgResis" Grid.Column="1" Grid.Row="5" Margin="12,8" Value="{Binding resistencia}" HorizontalAlignment="Left" Width="250" MinHeight="20" Maximum="100" Minimum="0"/>
+
+                <!--Velocidad de movimiento-->
+                <TextBlock Text="Velocidad movimiento: " Grid.Row="6" Margin="12,8" VerticalAlignment="Center"/>
+                <ProgressBar x:ConnectionId='7' x:Name="pgVelMov" Grid.Column="1" Grid.Row="6" Margin="12,8" Value="{Binding velMovimiento}" HorizontalAlignment="Left" MinHeight="20" Width="250" Maximum="800" Minimum="0"/>
+                
+                <!--Skins de los campeones-->
+                <StackPanel Grid.Row="7" Grid.ColumnSpan="2">
+                    <FlipView ItemsSource="{Binding skins}" MaxHeight="200" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,10">
+                        <FlipView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding}" />
+                            </DataTemplate>
+                        </FlipView.ItemTemplate>
+                    </FlipView>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+            
+</Page>
+
